@@ -1,9 +1,11 @@
 # ESP32-Cam-FireFighter-Car
 
-http://firefighter.local
+** Connect to ESP32-Cam wifi access point with
 
 - SSID: e-lab innovations
 - Pass: PASSWORD
+
+Go to http://192.168.4.1
 
 ## Motor Pins
 * 2 ==> Left Wheel Back

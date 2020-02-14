@@ -1,7 +1,7 @@
 #include "esp_camera.h"
 #include <WiFi.h>
-#include <ESPmDNS.h>
 #include <WiFiClient.h>
+#include <WiFiAP.h>
 
 //
 // WARNING!!! Make sure that you have either selected ESP32 Wrover Module,
@@ -136,36 +136,14 @@ void setup() {
   sensor_t * s = esp_camera_sensor_get();
   s->set_framesize(s, FRAMESIZE_CIF);
 
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
-
-  // Set up mDNS responder:
-  // - first argument is the domain name, in this example
-  //   the fully-qualified domain name is "esp8266.local"
-  // - second argument is the IP address to advertise
-  //   we send our IP address on the WiFi network
-  if (!MDNS.begin("firefighter")) {
-    Serial.println("Error setting up MDNS responder!");
-    while (1) {
-      delay(1000);
-    }
-  }
-  Serial.println("mDNS responder started");
-
+  WiFi.softAP(ssid, password);
   startCameraServer();
 
-  Serial.print("Camera Ready! Use 'http://firefighter.local");
-  //Serial.print(WiFi.localIP());
-  WiFiAddr = WiFi.localIP().toString();
-  Serial.println("' to connect");
-  // Add service to MDNS-SD
-  MDNS.addService("http", "tcp", 80);
+  Serial.print("Camera Ready! Use: ");
+  Serial.print(WiFi.softAPIP().toString());
+  WiFiAddr = WiFi.softAPIP().toString();
+  Serial.print("AP IP address: ");
+  Serial.println(WiFiAddr);
 }
 
 void loop() {
