@@ -19,4 +19,6 @@ Go to http://192.168.4.1
 
 **Board Selection**
 ![Selections](images/selection.png)
+
+**Working**
 ![Working](images/working.gif)
