@@ -1,6 +1,6 @@
-# ESP32-Cam-FireFighter-Car
+# :fire: ESP32-Cam-FireFighter-Car :robot:
 
-** Connect to ESP32-Cam wifi access point with
+**Connect to ESP32-Cam wifi access point with**
 
 - SSID: e-lab innovations
 - Pass: PASSWORD
@@ -15,3 +15,8 @@ Go to http://192.168.4.1
 
 
 * 12 ==> Pump
+
+
+**Board Selection**
+![Selections](images/selection.png)
+![Working](images/working.gif)
