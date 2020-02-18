@@ -340,8 +340,8 @@ static esp_err_t index_handler(httpd_req_t *req){
  page += "<p align=center><button style=width:90px;height:80px onmousedown=getsend('back') onmouseup=getsend('stop') ontouchstart=getsend('back') ontouchend=getsend('stop') ></button></p>";  
 
  page += "<p align=center>";
- page += "<button style=width:140px;height:40px onmousedown=getsend('ledon')>LED</button>";
- page += "<button style=width:140px;height:40px onmousedown=getsend('ledoff')>PUMP</button>";
+ page += "<button style=width:140px;height:40px onmousedown=getsend('led')>LED</button>";
+ page += "<button style=width:140px;height:40px onmousedown=getsend('pump')>PUMP</button>";
  page += "</p></body></html>";
  
  
@@ -381,13 +381,13 @@ static esp_err_t stop_handler(httpd_req_t *req){
     return httpd_resp_send(req, "OK", 2);
 }
 
-static esp_err_t ledon_handler(httpd_req_t *req){
+static esp_err_t led_handler(httpd_req_t *req){
     digitalWrite(gpLed, !digitalRead(gpLed));
     Serial.println("LED");
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, "OK", 2);
 }
-static esp_err_t ledoff_handler(httpd_req_t *req){
+static esp_err_t pump_handler(httpd_req_t *req){
     digitalWrite(gpPump, !digitalRead(gpPump));
     Serial.println("PUMP");
     httpd_resp_set_type(req, "text/html");
@@ -432,17 +432,17 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
     
-    httpd_uri_t ledon_uri = {
-        .uri       = "/ledon",
+    httpd_uri_t led_uri = {
+        .uri       = "/led",
         .method    = HTTP_GET,
-        .handler   = ledon_handler,
+        .handler   = led_handler,
         .user_ctx  = NULL
     };
     
-    httpd_uri_t ledoff_uri = {
-        .uri       = "/ledoff",
+    httpd_uri_t pump_uri = {
+        .uri       = "/pump",
         .method    = HTTP_GET,
-        .handler   = ledoff_handler,
+        .handler   = pump_handler,
         .user_ctx  = NULL
     };
 
@@ -491,8 +491,8 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &stop_uri); 
         httpd_register_uri_handler(camera_httpd, &left_uri);
         httpd_register_uri_handler(camera_httpd, &right_uri);
-        httpd_register_uri_handler(camera_httpd, &ledon_uri);
-        httpd_register_uri_handler(camera_httpd, &ledoff_uri);
+        httpd_register_uri_handler(camera_httpd, &led_uri);
+        httpd_register_uri_handler(camera_httpd, &pump_uri);
     }
 
     config.server_port += 1;
